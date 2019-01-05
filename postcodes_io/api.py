@@ -69,6 +69,16 @@ class Api(object):
             data = self._parse_json_data(response.content.decode('utf-8'))
             return data
 
+    def get_bulk_postcodes(self, payload):
+        """
+        :param payload: text containing postcodes '{ "postcodes" : ["OX49 5NU", "M32 0JG", "NE30 1DP"]}'
+        :return:
+        """
+        url = '/postcodes'
+        response = self._make_request('POST', url, json=payload)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        return data
+
     def _make_request(self, http_method, url, data=None, json=None):
         """
         :param http_method: http method i.e. GET, POST, PUT etc
@@ -85,6 +95,7 @@ class Api(object):
             url = self._build_url(url, extra_params=data)
             response = self._session.get(url, timeout=self._timeout)
         elif http_method == 'POST':
+            url = self._build_url(url)
             if data:
                 response = self._session.post(url, data=data, timeout=self._timeout)
             elif json:
