@@ -50,6 +50,16 @@ class Api(object):
         This method validates post_code
         :param postcode: postcode to check i.e. 'SW112EF'
         """
+        url = '/postcodes/{postcode}'.format(postcode=postcode)
+        response = self._make_request('GET',url)
+        return True if response.status_code == 200 else False
+
+
+    def get_postcode(self,postcode):
+        """
+        This method validates post_code
+        :param postcode: postcode to check i.e. 'SW112EF'
+        """
         print("calling validate_postcode method")
         url = '/postcodes/{postcode}'.format(postcode=postcode)
         response = self._make_request('GET',url)
@@ -89,9 +99,7 @@ class Api(object):
         return response
 
     def _build_url(self, url, path_elements=None, extra_params=None):
-        print("before url " + url)
         url = self.base_url + url
-        print("after url "+ url)
         (scheme, netloc, path, params, query, fragment) = urlparse(url)
 
         # Add extra_parameters to the query
