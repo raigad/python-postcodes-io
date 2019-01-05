@@ -3,6 +3,7 @@ import logging
 import json
 from urllib.parse import urlparse, urlunparse, urlencode, quote_plus
 from urllib.request import __version__ as urllib_version
+import http.client as http_client
 
 API_BASE_URL = 'http://api.postcodes.io'
 
@@ -11,13 +12,10 @@ class Api(object):
     def __init__(self, debug_http=False, timeout=None, base_url=None):
         """
         Instantiate a new postcodes_io.Api object
-        Args:
-            debug_http (bool, optional):
-                Set to True to enable debug output from urllib2 when performing
-                any HTTP requests.  Defaults to False.
-            timeout (int, optional):
-                Set timeout (in seconds) of the http/https requests. If None the
-                requests lib default will be used.  Defaults to None.
+
+        :param debug_http (bool, optional) enable logging for http requests.
+        :param timeout (int, optional): set timeout for http/https requests
+
         """
         self._debug_http = debug_http
         self._timeout = timeout
@@ -27,11 +25,6 @@ class Api(object):
             self.base_url = API_BASE_URL
 
         if debug_http:
-            try:
-                import http.client as http_client  # python 3
-            except ImportError:
-                import httplib as http_client  # python 2
-
             http_client.HTTPConnection.debuglevel = 1
             logging.basicConfig()  # initialize logging
             logging.getLogger().setLevel(logging.DEBUG)
@@ -62,7 +55,6 @@ class Api(object):
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
-    # def get_postcodes_for_coordinates(self,latitude=None,longitude=None,limit=10,radius=100):
     def get_postcodes_for_coordinates(self, **kwargs):
         """
         :param latitude: (required) Latitude
@@ -82,7 +74,7 @@ class Api(object):
         :param http_method: http method i.e. GET, POST, PUT etc
         :param url: api endpoint url
         :param data: dictionary of key/value params
-        :param json:
+        :param json: json data
         :return:
         """
         if not data:
