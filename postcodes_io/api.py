@@ -55,7 +55,7 @@ class Api(object):
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
-    def get_postcodes_for_coordinates(self, **kwargs):
+    def get_nearest_postcodes_for_coordinates(self, **kwargs):
         """
         :param latitude: (required) Latitude
         :param longitude: (required) Longitude
@@ -78,6 +78,35 @@ class Api(object):
         response = self._make_request('POST', url, json={'postcodes': postcodes_list})
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
+
+    def get_bulk_reverge_geocode(self, payload):
+        pass
+
+    def get_random_postcode(self):
+        pass
+
+    def get_nearest_postcodes_for_postcode(self, postcode):
+        pass
+
+    def get_autocomplete_postcode(self):
+        pass
+
+    def get_terminated_postcode(self, postcode):
+        pass
+
+    # outcodes methods
+    def get_outcode(self, outcode):
+        pass
+
+    def get_nearest_outcodes_for_outcode(self, outcode):
+        pass
+
+    def get_outcodes_for_coordinates(self, **kwargs):
+        pass
+
+    # extra methods
+    def get_distance_between_postcodes(self, **kwargs):
+        pass
 
     def _make_request(self, http_method, url, data=None, json=None):
         """

@@ -18,7 +18,7 @@ print(data2)
 """
 lat = 51.466324
 lon = -0.173606
-data = api.get_postcodes_for_coordinates(latitude=lat,longitude=lon,limit=2)
+data = api.get_nearest_postcodes_for_coordinates(latitude=lat,longitude=lon,limit=2)
 print(data)
 """
 
