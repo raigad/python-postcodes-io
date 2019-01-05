@@ -1,18 +1,17 @@
-
 import requests
 import logging
 import json
 from urllib.parse import urlparse, urlunparse, urlencode, quote_plus
 from urllib.request import __version__ as urllib_version
 
-
 logger = logging.getLogger(__name__)
 
 API_BASE_URL = 'http://api.postcodes.io'
 
+
 class Api(object):
 
-    def __init__(self,debug_http=False,timeout=None,base_url=None):
+    def __init__(self, debug_http=False, timeout=None, base_url=None):
         """
         Instantiate a new postcodes_io.Api object
         Args:
@@ -32,9 +31,9 @@ class Api(object):
 
         if debug_http:
             try:
-                import http.client as http_client #python 3
+                import http.client as http_client  # python 3
             except ImportError:
-                import httplib as http_client #python 2
+                import httplib as http_client  # python 2
 
             http_client.HTTPConnection.debuglevel = 1
             logging.basicConfig()  # initialize logging
@@ -45,38 +44,31 @@ class Api(object):
 
         self._session = requests.Session()
 
-    def validate_postcode(self,postcode):
+    def validate_postcode(self, postcode):
         """
         This method validates post_code
         :param postcode: postcode to check i.e. 'SW112EF'
+        Returns:
+            True if postcode is valid False if postcode is invalid
         """
-        url = '/postcodes/{postcode}'.format(postcode=postcode)
-        response = self._make_request('GET',url)
-        return True if response.status_code == 200 else False
+        url = '/postcodes/{postcode}/validate'.format(postcode=postcode)
+        response = self._make_request('GET', url)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        return True if response.status_code == 200 and data['result'] else False
 
-
-    def get_postcode(self,postcode):
+    def get_postcode(self, postcode):
         """
         This method validates post_code
         :param postcode: postcode to check i.e. 'SW112EF'
         """
         print("calling validate_postcode method")
         url = '/postcodes/{postcode}'.format(postcode=postcode)
-        response = self._make_request('GET',url)
-
-        print ("printing response")
-        data =  self._parse_response_to_json(response.content.decode('utf-8'))
-        print("print data =")
-        print(data)
-        #if len(postcode) > 4:
-        #    return True
-        #else:
-        #    return False
-
+        response = self._make_request('GET', url)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        return data
 
     def _make_request(self, http_method, url, data=None, json=None):
         """
-
         :param http_method: http method i.e. GET, POST, PUT etc
         :param url: api endpoint url
         :param data: dictionary of key/value params
@@ -89,7 +81,7 @@ class Api(object):
         response = 0
         if http_method == 'GET':
             url = self._build_url(url, extra_params=data)
-            response = self._session.get(url,timeout=self._timeout)
+            response = self._session.get(url, timeout=self._timeout)
         elif http_method == 'POST':
             if data:
                 response = self._session.post(url, data=data, timeout=self._timeout)
@@ -121,7 +113,8 @@ class Api(object):
 
         return urlencode(parameters)
 
-    def _parse_response_to_json(self,json_data):
+    @staticmethod
+    def _parse_json_data(json_data):
         try:
             data = json.loads(json_data)
         except ValueError:
