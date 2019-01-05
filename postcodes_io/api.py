@@ -69,13 +69,13 @@ class Api(object):
             data = self._parse_json_data(response.content.decode('utf-8'))
             return data
 
-    def get_bulk_postcodes(self, payload):
+    def get_bulk_postcodes(self, postcodes_list):
         """
-        :param payload: text containing postcodes '{ "postcodes" : ["OX49 5NU", "M32 0JG", "NE30 1DP"]}'
+        :param postcodes_list: list containing postcodes
         :return:
         """
         url = '/postcodes'
-        response = self._make_request('POST', url, json=payload)
+        response = self._make_request('POST', url, json={'postcodes': postcodes_list})
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
