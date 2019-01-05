@@ -4,13 +4,10 @@ import json
 from urllib.parse import urlparse, urlunparse, urlencode, quote_plus
 from urllib.request import __version__ as urllib_version
 
-logger = logging.getLogger(__name__)
-
 API_BASE_URL = 'http://api.postcodes.io'
 
 
 class Api(object):
-
     def __init__(self, debug_http=False, timeout=None, base_url=None):
         """
         Instantiate a new postcodes_io.Api object
@@ -41,31 +38,44 @@ class Api(object):
             requests_log = logging.getLogger("requests.packages.urllib3")
             requests_log.setLevel(logging.DEBUG)
             requests_log.propagate = True
-
         self._session = requests.Session()
 
     def validate_postcode(self, postcode):
         """
         This method validates post_code
         :param postcode: postcode to check i.e. 'SW112EF'
-        Returns:
-            True if postcode is valid False if postcode is invalid
+        :return: True if postcode is valid False if postcode is invalid
         """
         url = '/postcodes/{postcode}/validate'.format(postcode=postcode)
         response = self._make_request('GET', url)
         data = self._parse_json_data(response.content.decode('utf-8'))
-        return True if response.status_code == 200 and data['result'] else False
+        return True if response.status_code == 200 and data.get('result') else False
 
     def get_postcode(self, postcode):
         """
-        This method validates post_code
+        This method returns data for post_code
         :param postcode: postcode to check i.e. 'SW112EF'
+        :return: postcode detailed data
         """
-        print("calling validate_postcode method")
         url = '/postcodes/{postcode}'.format(postcode=postcode)
         response = self._make_request('GET', url)
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
+
+    # def get_postcodes_for_coordinates(self,latitude=None,longitude=None,limit=10,radius=100):
+    def get_postcodes_for_coordinates(self, **kwargs):
+        """
+        :param latitude: (required) Latitude
+        :param longitude: (required) Longitude
+        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        :param radius: (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
+        :return:
+        """
+        if kwargs.get('latitude') and kwargs.get('longitude'):
+            url = '/postcodes'
+            response = self._make_request('GET', url, data=kwargs)
+            data = self._parse_json_data(response.content.decode('utf-8'))
+            return data
 
     def _make_request(self, http_method, url, data=None, json=None):
         """
@@ -87,7 +97,6 @@ class Api(object):
                 response = self._session.post(url, data=data, timeout=self._timeout)
             elif json:
                 response = self._session.post(url, json=json, timeout=self._timeout)
-
         return response
 
     def _build_url(self, url, path_elements=None, extra_params=None):
@@ -110,7 +119,6 @@ class Api(object):
         """
         if not parameters or not isinstance(parameters, dict):
             return None
-
         return urlencode(parameters)
 
     @staticmethod
@@ -119,5 +127,4 @@ class Api(object):
             data = json.loads(json_data)
         except ValueError:
             data = json.loads('{"Error": "Unknown error while parsing response"}')
-
         return data

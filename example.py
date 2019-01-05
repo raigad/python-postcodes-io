@@ -6,12 +6,20 @@ import postcodes_io
 api = postcodes_io.Api(debug_http=False)
 
 postcode1 = 'SW112EF'
-postcode2= 'SW1122222'
+postcode2= 'SW112222'
 
-data1 = api.get_postcode(postcode1)
-print(data1)
-data2 = api.get_postcode(postcode2)
-print(data2)
+#data1 = api.get_postcode(postcode1)
+#print(data1)
+#data2 = api.get_postcode(postcode2)
+#print(data2)
+
+lat = 51.466324
+lon = -0.173606
+
+data = api.get_postcodes_for_coordinates(latitude=lat,longitude=lon,limit=2)
+#print("printing data response")
+print(data)
+
 """
 if api.validate_postcode(postcode1):
     print("postcode ="+ postcode1+ " is valid")
