@@ -102,3 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+#manual added gitigore for pycharm ide project file and setups
+**/.idea/*
