@@ -2,18 +2,17 @@
 import requests
 import logging
 import json
-
-
-#TODO: could add support for python 2
 from urllib.parse import urlparse, urlunparse, urlencode, quote_plus
 from urllib.request import __version__ as urllib_version
 
 
 logger = logging.getLogger(__name__)
 
+API_BASE_URL = 'http://api.postcodes.io'
+
 class Api(object):
 
-    def __init__(self,debug_http=False,timeout=None):
+    def __init__(self,debug_http=False,timeout=None,base_url=None):
         """
         Instantiate a new postcodes_io.Api object
         Args:
@@ -26,6 +25,10 @@ class Api(object):
         """
         self._debug_http = debug_http
         self._timeout = timeout
+        if base_url:
+            self.base_url = base_url
+        else:
+            self.base_url = API_BASE_URL
 
         if debug_http:
             try:
@@ -34,7 +37,6 @@ class Api(object):
                 import httplib as http_client #python 2
 
             http_client.HTTPConnection.debuglevel = 1
-
             logging.basicConfig()  # initialize logging
             logging.getLogger().setLevel(logging.DEBUG)
             requests_log = logging.getLogger("requests.packages.urllib3")
@@ -49,6 +51,13 @@ class Api(object):
         :param postcode: postcode to check i.e. 'SW112EF'
         """
         print("calling validate_postcode method")
+        url = '/postcodes/{postcode}'.format(postcode=postcode)
+        response = self._make_request('GET',url)
+
+        print ("printing response")
+        data =  self._parse_response_to_json(response.content.decode('utf-8'))
+        print("print data =")
+        print(data)
         #if len(postcode) > 4:
         #    return True
         #else:
@@ -80,6 +89,9 @@ class Api(object):
         return response
 
     def _build_url(self, url, path_elements=None, extra_params=None):
+        print("before url " + url)
+        url = self.base_url + url
+        print("after url "+ url)
         (scheme, netloc, path, params, query, fragment) = urlparse(url)
 
         # Add extra_parameters to the query
@@ -101,3 +113,10 @@ class Api(object):
 
         return urlencode(parameters)
 
+    def _parse_response_to_json(self,json_data):
+        try:
+            data = json.loads(json_data)
+        except ValueError:
+            data = json.loads('{"Error": "Unknown error while parsing response"}')
+
+        return data
