@@ -21,12 +21,13 @@ lon = -0.173606
 data = api.get_nearest_postcodes_for_coordinates(latitude=lat,longitude=lon,limit=2)
 print(data)
 """
-
+"""
 #data = api.get_bulk_postcodes({"postcodes":["OX49 5NU","M32 0JG","NE30 1DP"]})
 list = ["SW112EF"]
 data = api.get_bulk_postcodes(list)
 print("\n")
 print(data)
+"""
 
 """
 if api.validate_postcode(postcode1):
@@ -40,4 +41,14 @@ else:
     print("postcode =" + postcode2 + " is invalid")
 """
 
+
+"""
+#get random postcode
+postcode_data = api.get_random_postcode()
+print("random_postcode\n\n",postcode_data)
+"""
+
+#get get_nearest_postcodes_for_postcode
+data = api.get_nearest_postcodes_for_postcode(postcode='SW112EF')
+print("\n",data)
 

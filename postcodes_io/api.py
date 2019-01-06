@@ -55,6 +55,18 @@ class Api(object):
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
+    def get_nearest_postcodes_for_postcode(self, **kwargs):
+        """
+        :param postcode: postcode
+        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        :param radius: (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
+        :return: list of nearest postcodes data
+        """
+        url = '/postcodes/{postcode}/nearest'.format(postcode=kwargs.get('postcode'))
+        response = self._make_request('GET', url, data=kwargs)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        return data
+
     def get_nearest_postcodes_for_coordinates(self, **kwargs):
         """
         :param latitude: (required) Latitude
@@ -72,7 +84,7 @@ class Api(object):
     def get_bulk_postcodes(self, postcodes_list):
         """
         :param postcodes_list: list containing postcodes
-        :return:
+        :return: list of postcode data
         """
         url = '/postcodes'
         response = self._make_request('POST', url, json={'postcodes': postcodes_list})
@@ -83,10 +95,13 @@ class Api(object):
         pass
 
     def get_random_postcode(self):
-        pass
-
-    def get_nearest_postcodes_for_postcode(self, postcode):
-        pass
+        """
+        :return: postcode data for random postcode
+        """
+        url = '/random/postcodes'
+        response = self._make_request('GET', url)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        return data
 
     def get_autocomplete_postcode(self):
         pass
