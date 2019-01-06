@@ -2,11 +2,10 @@
 
 import postcodes_io
 
-
 api = postcodes_io.Api(debug_http=True)
 
 postcode1 = 'SW112EF'
-postcode2= 'SW112222'
+postcode2 = 'SW112222'
 
 """
 data1 = api.get_postcode(postcode1)
@@ -41,7 +40,6 @@ else:
     print("postcode =" + postcode2 + " is invalid")
 """
 
-
 """
 #get random postcode
 postcode_data = api.get_random_postcode()
@@ -58,12 +56,26 @@ print("\n",data)
 data =api.get_autocomplete_postcode(postcode='SW112E')
 print("\n\n",data)
 """
-
+"""
 terminated_postcode = 'SW11 2ZW'
 #terminated_postcode = 'SW112EF'
 if api.is_postcode_terminated(terminated_postcode):
     print(terminated_postcode+" is_terminated")
 else:
     print(terminated_postcode+" is_working_postcode")
+"""
 
+payload_data = {
+    "geolocations": [{
+        "longitude": 0.629834723775309,
+        "latitude": 51.7923246977375
+    }, {
+        "longitude": -2.49690382054704,
+        "latitude": 53.5351312861402,
+        "radius": 1000,
+        "limit": 5
+    }]
+}
+data = api.get_bulk_reverge_geocode(payload_data)
 
+print("\n\n",data)

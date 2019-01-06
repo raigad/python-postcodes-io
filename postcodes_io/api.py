@@ -102,8 +102,30 @@ class Api(object):
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
-    def get_bulk_reverge_geocode(self, payload):
-        pass
+    def get_bulk_reverge_geocode(self, payload_data):
+        """
+        :param payload_data: dict with cordinates e.g.
+        payload_data = {
+        "geolocations":
+        [
+            {
+                "longitude": 0.629834723775309,
+                "latitude": 51.7923246977375
+            },
+            {
+                "longitude": -2.49690382054704,
+                "latitude": 53.5351312861402,
+                "radius": 1000,
+                "limit": 5
+            }
+        ]
+        }
+        :return: list of postcode data
+        """
+        url = '/postcodes'
+        response = self._make_request('POST', url, json=payload_data)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        return data
 
     def get_random_postcode(self):
         """
