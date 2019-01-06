@@ -65,6 +65,7 @@ else:
     print(terminated_postcode+" is_working_postcode")
 """
 
+"""
 payload_data = {
     "geolocations": [{
         "longitude": 0.629834723775309,
@@ -77,5 +78,18 @@ payload_data = {
     }]
 }
 data = api.get_bulk_reverge_geocode(payload_data)
-
 print("\n\n",data)
+"""
+
+"""
+outcode = 'KT1'
+data  = api.get_outcode(outcode)
+print("\n\n",data)
+"""
+
+outcode = 'KT1'
+data = api.get_nearest_outcodes_for_outcode(outcode=outcode,limit=2)
+print("\n\n",data)
+
+
+

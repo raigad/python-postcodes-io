@@ -149,10 +149,27 @@ class Api(object):
 
     # outcodes methods
     def get_outcode(self, outcode):
-        pass
+        """
+        This method returns data for post_code
+        :param outcode: postcode outward code to check i.e. 'KT1'
+        :return: postcode detailed data
+        """
+        url = '/outcodes/{outcode}'.format(outcode=outcode)
+        response = self._make_request('GET', url)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        return data
 
-    def get_nearest_outcodes_for_outcode(self, outcode):
-        pass
+    def get_nearest_outcodes_for_outcode(self, **kwargs):
+        """
+        :param outcode: outward code
+        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        :param radius: (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
+        :return: list of nearest postcodes data
+        """
+        url = '/outcodes/{outcode}/nearest'.format(outcode=kwargs.get('outcode'))
+        response = self._make_request('GET', url, data=kwargs)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        return data
 
     def get_outcodes_for_coordinates(self, **kwargs):
         pass
