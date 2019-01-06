@@ -147,7 +147,6 @@ class Api(object):
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
-    # outcodes methods
     def get_outcode(self, outcode):
         """
         This method returns data for post_code
@@ -171,10 +170,21 @@ class Api(object):
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
-    def get_outcodes_for_coordinates(self, **kwargs):
-        pass
+    def get_nearest_outcodes_for_coordinates(self, **kwargs):
+        """
+        :param latitude: (required) Latitude
+        :param longitude: (required) Longitude
+        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        :param radius: (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
+        :return:
+        """
+        if kwargs.get('latitude') and kwargs.get('longitude'):
+            url = '/outcodes'
+            response = self._make_request('GET', url, data=kwargs)
+            data = self._parse_json_data(response.content.decode('utf-8'))
+            return data
 
-    # extra methods
+    # TODO: add extra method to get haversine distance between postcodes using their coordinates
     def get_distance_between_postcodes(self, **kwargs):
         pass
 
