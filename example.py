@@ -47,8 +47,23 @@ else:
 postcode_data = api.get_random_postcode()
 print("random_postcode\n\n",postcode_data)
 """
-
+"""
 #get get_nearest_postcodes_for_postcode
 data = api.get_nearest_postcodes_for_postcode(postcode='SW112EF')
 print("\n",data)
+"""
+
+"""
+#get
+data =api.get_autocomplete_postcode(postcode='SW112E')
+print("\n\n",data)
+"""
+
+terminated_postcode = 'SW11 2ZW'
+#terminated_postcode = 'SW112EF'
+if api.is_postcode_terminated(terminated_postcode):
+    print(terminated_postcode+" is_terminated")
+else:
+    print(terminated_postcode+" is_working_postcode")
+
 

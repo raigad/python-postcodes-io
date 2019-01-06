@@ -33,7 +33,7 @@ class Api(object):
             requests_log.propagate = True
         self._session = requests.Session()
 
-    def validate_postcode(self, postcode):
+    def is_postcode_valid(self, postcode):
         """
         This method validates post_code
         :param postcode: postcode to check i.e. 'SW112EF'
@@ -43,6 +43,17 @@ class Api(object):
         response = self._make_request('GET', url)
         data = self._parse_json_data(response.content.decode('utf-8'))
         return True if response.status_code == 200 and data.get('result') else False
+
+    def is_postcode_terminated(self, postcode):
+        """
+        :param postcode:
+        :return: True if postcode is terminated or False otherwise
+        """
+        url = '/terminated_postcodes/{postcode}'.format(postcode=postcode)
+        response = self._make_request('GET', url)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        print(data)
+        return True if response.status_code == 200 and data.get('result', {}).get('postcode') else False
 
     def get_postcode(self, postcode):
         """
@@ -103,11 +114,16 @@ class Api(object):
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
-    def get_autocomplete_postcode(self):
-        pass
-
-    def get_terminated_postcode(self, postcode):
-        pass
+    def get_autocomplete_postcode(self, **kwargs):
+        """
+        :param postcode: partial postcode
+        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        :return: list of possible postcodes
+        """
+        url = '/postcodes/{postcode}/autocomplete'.format(postcode=kwargs.get('postcode'))
+        response = self._make_request('GET', url, data=kwargs)
+        data = self._parse_json_data(response.content.decode('utf-8'))
+        return data
 
     # outcodes methods
     def get_outcode(self, outcode):
