@@ -10,7 +10,6 @@ setuptools.setup(
     author_email="raigad1630@gmail.com",
     description="A Python Wrapper for postcodes.io",
     long_description=long_description,
-    long_description_content_type="text/markdown",
     url="https://github.com/raigad/python-postcodes-io",
     packages=setuptools.find_packages(),
     classifiers=[
