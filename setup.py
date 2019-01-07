@@ -8,9 +8,9 @@ from setuptools import find_packages, setup
 
 ###############################################################################
 
-NAME = "postcodes-io-api"
+NAME = "postcodes_io_api"
 PACKAGES = find_packages()
-META_PATH = os.path.join("postcodes-io-api", "__init__.py")
+META_PATH = os.path.join(NAME, "__init__.py")
 KEYWORDS = ["uk", "postcode", "geocode", "coordinates", "latitude" "longitude" "postcode-api" "royalmail"]
 PROJECT_URLS = {
     "Documentation": "https://github.com/raigad/python-postcodes-io",
