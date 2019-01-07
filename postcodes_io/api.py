@@ -52,7 +52,6 @@ class Api(object):
         url = '/terminated_postcodes/{postcode}'.format(postcode=postcode)
         response = self._make_request('GET', url)
         data = self._parse_json_data(response.content.decode('utf-8'))
-        print(data)
         return True if response.status_code == 200 and data.get('result', {}).get('postcode') else False
 
     def get_postcode(self, postcode):
