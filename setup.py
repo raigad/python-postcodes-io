@@ -4,11 +4,12 @@ import re
 
 from setuptools import find_packages, setup
 
+# setup.py file is adopted from Hynek Schlawack's module attrs
 
 ###############################################################################
 
 NAME = "postcodes-io-simple"
-PACKAGES = find_packages(where="postcodes_io")
+PACKAGES = find_packages()
 META_PATH = os.path.join("postcodes_io", "__init__.py")
 KEYWORDS = ["uk", "postcode", "geocode", "coordinates", "latitude" "longitude" "postcodesio" "royalmail"]
 PROJECT_URLS = {
@@ -32,7 +33,6 @@ CLASSIFIERS = [
     "Operating System :: OS Independent",
 ]
 INSTALL_REQUIRES = []
-
 
 ###############################################################################
 
@@ -66,10 +66,9 @@ def find_meta(meta):
 VERSION = find_meta("version")
 URL = find_meta("url")
 LONG = (
-    read("README.md")
-    + "\n\n"
+        read("README.md")
+        + "\n\n"
 )
-
 
 if __name__ == "__main__":
     setup(
@@ -86,37 +85,8 @@ if __name__ == "__main__":
         keywords=KEYWORDS,
         long_description=LONG,
         packages=PACKAGES,
-        package_dir={"": "postcodes_io"},
         zip_safe=False,
         classifiers=CLASSIFIERS,
         install_requires=INSTALL_REQUIRES,
         include_package_data=True,
     )
-
-"""
-import setuptools
-
-with open("README.md", "r") as fh:
-    long_description = fh.read()
-
-setuptools.setup(
-    name="postcodes-io-simple",
-    version="0.0.1",
-    author="Rohit Deshmukh",
-    author_email="raigad1630@gmail.com",
-    description="A Python Wrapper for postcodes.io",
-    long_description=long_description,
-    license='MIT',
-    keywords='uk postcode geocode coordinates latitude longitude postcodesio royalmail',
-    python_requires='>=3',
-    url="https://github.com/raigad/python-postcodes-io",
-    packages=setuptools.find_packages(exclude=['contrib', 'docs']),
-    classifiers=[
-        # Indicate who your project is intended for
-        'Intended Audience :: Developers',
-        "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-    ],
-)
-"""
