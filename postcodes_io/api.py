@@ -13,10 +13,8 @@ class Api(object):
         """
         Instantiate a new postcodes_io.Api object
 
-        :parameter debug_http : boolean
-            (optional) To enable logging for http requests
-        :parameter timeout : int
-            Set timeout for http/https requests
+        * **:param debug_http**  - boolean (optional) To enable logging for http requests
+        * **:param timeout **  - int Set timeout for http/https requests
 
         """
         self._debug_http = debug_http
@@ -38,8 +36,8 @@ class Api(object):
     def is_postcode_valid(self, postcode):
         """
         This method validates post_code
-        * **:param: postcode** - postcode to check i.e. 'SW112EF'
-        * **:return:** - True if postcode is valid False if postcode is invalid
+        * **:param postcode** - postcode to check i.e. 'SW112EF'
+        * **:return** - True if postcode is valid False if postcode is invalid
 
         ```
           is_valid = api.is_postcode_valid('SW112EF')
@@ -53,8 +51,8 @@ class Api(object):
 
     def is_postcode_terminated(self, postcode):
         """
-        * **:param: postcode** - postcode to check i.e. 'SW112ZW'
-        * **:return:** True if postcode is terminated or False otherwise
+        * **:param postcode** - postcode to check i.e. 'SW112ZW'
+        * **:return** True if postcode is terminated or False otherwise
 
         ```
           is_terminated = api.is_postcode_terminated('SW112EF')
@@ -70,7 +68,7 @@ class Api(object):
         """
         This method returns data for post_code
         * **:param postcode** - postcode to check i.e. 'SW112EF'
-        * **::return:** - postcode detailed data
+        * **::return** - postcode detailed data
         ```
           data = api.get_postcode('SW112EF')
 
@@ -83,10 +81,16 @@ class Api(object):
 
     def get_nearest_postcodes_for_postcode(self, **kwargs):
         """
-        :param postcode: postcode
-        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
-        :param radius: (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
-        :return: list of nearest postcodes data
+        * **kwargs**
+        * **:param postcode** - postcode
+        * **:param limit** - (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        * **:param radius** -  (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
+        * **:return:** - list of nearest postcodes data
+
+        ```
+          data = api.get_nearest_postcodes_for_postcode(postcode='SW112EF',limit=2)
+
+        ```
         """
         url = '/postcodes/{postcode}/nearest'.format(postcode=kwargs.get('postcode'))
         response = self._make_request('GET', url, data=kwargs)
@@ -95,11 +99,18 @@ class Api(object):
 
     def get_nearest_postcodes_for_coordinates(self, **kwargs):
         """
-        :param latitude: (required) Latitude
-        :param longitude: (required) Longitude
-        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
-        :param radius: (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
-        :return:
+        * **kwargs**
+        * **:param latitude** - (required) Latitude
+        * **:param longitude** - (required) Longitude
+        * **:param limit** - (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        * **:param radius** -  (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less
+        * **:return:** - list of nearest postcodes data
+
+        ```
+          data = api.get_nearest_postcodes_for_coordinates(latitude=51.466324,longitude=-0.173606,limit=2)
+
+        ```
+
         """
         if kwargs.get('latitude') and kwargs.get('longitude'):
             url = '/postcodes'
@@ -109,8 +120,14 @@ class Api(object):
 
     def get_bulk_postcodes(self, postcodes_list):
         """
-        :param postcodes_list: list containing postcodes
-        :return: list of postcode data
+        * **:param postcodes_list** - list containing postcodes
+        * **:return** - list of postcode data
+
+        ```
+          postcode_list = ["SW112EF","HA97QP"]
+          data = api.get_bulk_postcodes(postcode_list)
+
+        ```
         """
         url = '/postcodes'
         response = self._make_request('POST', url, json={'postcodes': postcodes_list})
@@ -119,7 +136,8 @@ class Api(object):
 
     def get_bulk_reverse_geocode(self, payload_data):
         """
-        :param payload_data: dict with cordinates e.g.
+        * **:param payload_data** - dict with cordinates e.g.
+        ```
         payload_data = {
         "geolocations":
         [
@@ -135,7 +153,13 @@ class Api(object):
             }
         ]
         }
-        :return: list of postcode data
+        ```
+        * **:return** - list of postcode data
+
+        ```
+            data = api.get_bulk_reverse_geocode(payload_data)
+        ```
+
         """
         url = '/postcodes'
         response = self._make_request('POST', url, json=payload_data)
@@ -144,7 +168,11 @@ class Api(object):
 
     def get_random_postcode(self):
         """
-        :return: postcode data for random postcode
+        * **:return** - random postcode
+
+        ```
+            data = api.get_random_postcode()
+        ```
         """
         url = '/random/postcodes'
         response = self._make_request('GET', url)
@@ -153,9 +181,14 @@ class Api(object):
 
     def get_autocomplete_postcode(self, **kwargs):
         """
-        :param postcode: partial postcode
-        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
-        :return: list of possible postcodes
+        * **kwargs**
+        * **:param postcode** - partial postcode
+        * **:param limit** - (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        * **:return** -  list of possible postcodes
+
+        ```
+            data = api.get_autocomplete_postcode(postcode='SW18',limit=2)
+        ```
         """
         url = '/postcodes/{postcode}/autocomplete'.format(postcode=kwargs.get('postcode'))
         response = self._make_request('GET', url, data=kwargs)
@@ -165,8 +198,12 @@ class Api(object):
     def get_outcode(self, outcode):
         """
         This method returns data for post_code
-        :param outcode: postcode outward code to check i.e. 'KT1'
-        :return: postcode detailed data
+        * **:param outcode** - postcode outward code to check i.e. 'KT1'
+        * **:return** - postcode detailed data
+
+        ```
+            data = api.get_outcode('KT1')
+        ```
         """
         url = '/outcodes/{outcode}'.format(outcode=outcode)
         response = self._make_request('GET', url)
@@ -175,10 +212,15 @@ class Api(object):
 
     def get_nearest_outcodes_for_outcode(self, **kwargs):
         """
-        :param outcode: outward code
-        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
-        :param radius: (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
-        :return: list of nearest postcodes data
+        * **kwargs**
+        * **:param outcode** - outward code
+        * **:param limit** - (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        * **:param radius** - (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
+        * **:return:** - list of nearest postcodes data
+
+        ```
+            data = api.get_nearest_outcodes_for_outcode(outcode='KT1',limit=2)
+        ```
         """
         url = '/outcodes/{outcode}/nearest'.format(outcode=kwargs.get('outcode'))
         response = self._make_request('GET', url, data=kwargs)
@@ -187,11 +229,16 @@ class Api(object):
 
     def get_nearest_outcodes_for_coordinates(self, **kwargs):
         """
-        :param latitude: (required) Latitude
-        :param longitude: (required) Longitude
-        :param limit: (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
-        :param radius: (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less than 2,000m.
-        :return:
+        * **kwargs**
+        * **:param latitude** - (required) Latitude
+        * **:param longitude** - (required) Longitude
+        * **:param limit** - (not required) Limits number of postcodes matches to return. Defaults to 10. Needs to be less than 100.
+        * **:param radius** -  (not required) Limits number of postcodes matches to return. Defaults to 100m. Needs to be less
+        * **:return:** - list of nearest outcodes data
+
+        ```
+            data = api.get_nearest_outcodes_for_coordinates(latitude=51.466324,longitude=-0.173606,limit=2)
+        ```
         """
         if kwargs.get('latitude') and kwargs.get('longitude'):
             url = '/outcodes'
