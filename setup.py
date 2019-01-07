@@ -14,7 +14,7 @@ setuptools.setup(
     keywords='uk postcode geocode coordinates latitude longitude postcodesio royalmail',
     python_requires='>=3',
     url="https://github.com/raigad/python-postcodes-io",
-    packages=setuptools.find_packages(exclude=['contrib', 'docs', 'tests*']),
+    packages=setuptools.find_packages(exclude=['contrib', 'docs']),
     classifiers=[
         # Indicate who your project is intended for
         'Intended Audience :: Developers',

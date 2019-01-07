@@ -93,8 +93,10 @@ data = api.get_nearest_outcodes_for_outcode(outcode=outcode,limit=2)
 print("\n\n",data)
 """
 
+"""
 lat = 51.466324
 lon = -0.173606
 data = api.get_nearest_outcodes_for_coordinates(latitude=lat,longitude=lon,limit=1)
 print("\n\n",data)
+"""
 
