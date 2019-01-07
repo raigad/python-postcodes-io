@@ -9,7 +9,7 @@ class PostcodeIOTest(unittest.TestCase):
         self.api_client = postcodes_io.Api()
         self.latitude = 51.466324
         self.longitude = -0.173606
-        self.partial_postcode = 'KT19'
+        self.VALID_OUTCODES = ['KT19', 'HA9', 'SW19', 'IV2', 'PH16']
         self.VALID_POSTCODES = ['L40TH', 'SW151JF', 'SW195AG', 'KT185LQ', 'NW87JY', 'RG11LZ']
         self.INVALID_POSTCODES = ['HA9997QP', 'SW19OSZ', 'HA899NX', 'RG101LZ', 'SW12EF', 'L500QD']
         self.TERMINATED_POSTCODES = ['SW112ZW', 'HA89NX', 'IV23EH', 'BA12QT', 'OX13LA', 'SE109DB']
@@ -68,7 +68,21 @@ class PostcodeIOTest(unittest.TestCase):
         self.assertEqual(200, data.get('status', None))
 
     def test_get_autocomplete_postcode(self):
-        data = self.api_client.get_autocomplete_postcode(postcode=self.partial_postcode, limit=3)
+        data = self.api_client.get_autocomplete_postcode(postcode=random.choice(self.VALID_OUTCODES), limit=3)
+        self.assertEqual(200, data.get('status', None))
+        self.assertEqual(3, len(data.get('result', [])), "Checking for result count")
+
+    def test_get_outcode(self):
+        data = self.api_client.get_outcode(random.choice(self.VALID_OUTCODES))
+        self.assertEqual(200, data.get('status', None), "Checking for valid outcode")
+
+    def test_get_nearest_outcodes_for_outcode(self):
+        data = self.api_client.get_nearest_outcodes_for_outcode(outcode=random.choice(self.VALID_OUTCODES))
+        self.assertEqual(200, data.get('status', None), "Checking for valid outcode")
+
+    def test_get_nearest_outcodes_for_coordinates(self):
+        data = self.api_client.get_nearest_outcodes_for_coordinates(latitude=self.latitude, longitude=self.longitude,
+                                                                    limit=3)
         self.assertEqual(200, data.get('status', None))
         self.assertEqual(3, len(data.get('result', [])), "Checking for result count")
 
