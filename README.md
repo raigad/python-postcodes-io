@@ -11,10 +11,15 @@ Api.is_postcode_valid(self, postcode)
 ```
 
 This method validates post_code
-:parameter postcode:
-    postcode to check i.e. 'SW112EF'
-:return: True if postcode is valid False if postcode is invalid
->>> data = api.is_postcode_valid('SW112EF')
+##Params
+* **postcode** - postcode to check i.e. 'SW112EF'
+
+##Returns
+ - True if postcode is valid False if postcode is invalid
+```
+  is_valid = api.is_postcode_valid('SW112EF')
+
+```
 
 ## is_postcode_terminated
 ```python
