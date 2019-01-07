@@ -32,7 +32,7 @@ CLASSIFIERS = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-INSTALL_REQUIRES = []
+INSTALL_REQUIRES = ['requests']
 
 ###############################################################################
 
