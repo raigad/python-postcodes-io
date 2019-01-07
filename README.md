@@ -11,11 +11,9 @@ Api.is_postcode_valid(self, postcode)
 ```
 
 This method validates post_code
-##Params
-* **postcode** - postcode to check i.e. 'SW112EF'
+* **:param: postcode** - postcode to check i.e. 'SW112EF'
+* **:return:** - True if postcode is valid False if postcode is invalid
 
-##Returns
- - True if postcode is valid False if postcode is invalid
 ```
   is_valid = api.is_postcode_valid('SW112EF')
 
@@ -26,8 +24,13 @@ This method validates post_code
 Api.is_postcode_terminated(self, postcode)
 ```
 
-:param postcode:
-:return: True if postcode is terminated or False otherwise
+* **:param: postcode** - postcode to check i.e. 'SW112ZW'
+* **:return:** True if postcode is terminated or False otherwise
+
+```
+  is_terminated = api.is_postcode_terminated('SW112EF')
+
+```
 
 ## get_postcode
 ```python
@@ -35,8 +38,12 @@ Api.get_postcode(self, postcode)
 ```
 
 This method returns data for post_code
-:param postcode: postcode to check i.e. 'SW112EF'
-:return: postcode detailed data
+* **:param postcode** - postcode to check i.e. 'SW112EF'
+* **::return:** - postcode detailed data
+```
+  data = api.get_postcode('SW112EF')
+
+```
 
 ## get_nearest_postcodes_for_postcode
 ```python
