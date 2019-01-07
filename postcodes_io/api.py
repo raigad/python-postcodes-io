@@ -101,7 +101,7 @@ class Api(object):
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
-    def get_bulk_reverge_geocode(self, payload_data):
+    def get_bulk_reverse_geocode(self, payload_data):
         """
         :param payload_data: dict with cordinates e.g.
         payload_data = {

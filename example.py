@@ -79,7 +79,7 @@ payload_data = {
         "limit": 5
     }]
 }
-data = api.get_bulk_reverge_geocode(payload_data)
+data = api.get_bulk_reverse_geocode(payload_data)
 print("\n\n",data)
 """
 
