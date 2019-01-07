@@ -1,4 +1,4 @@
-# postcodes_io
+# postcodes_io_api
 A library that provides a Python interface to the postcodes_io API.
 # Api
 ```python
