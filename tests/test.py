@@ -21,6 +21,14 @@ class PostcodeIOTest(unittest.TestCase):
         self.assertFalse(self.api_client.is_postcode_terminated(random.choice(self.INVALID_POSTCODES)))
         self.assertTrue(self.api_client.is_postcode_terminated(random.choice(self.TERMINATED_POSTCODES)))
 
+    def test_get_postcode(self):
+        valid_data = self.api_client.get_postcode(random.choice(self.VALID_POSTCODES))
+        self.assertEqual(200, valid_data.get('status', None), "Checking get postcode")
+        invalid_data = self.api_client.get_postcode(random.choice(self.INVALID_POSTCODES))
+        self.assertEqual(404, invalid_data.get('status', None), "Checking invalid postcode")
+        terminated_data = self.api_client.get_postcode(random.choice(self.TERMINATED_POSTCODES))
+        self.assertEqual(404, terminated_data.get('status', None), "Checking terminated postcode")
+
     def tearDown(self):
         """
             : close api_client session to avoid 'ResourceWarning: unclosed <socket.socket'

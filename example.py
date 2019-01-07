@@ -7,12 +7,14 @@ api = postcodes_io.Api(debug_http=True)
 postcode1 = 'SW112EF'
 postcode2 = 'SW112222'
 
-"""
+
 data1 = api.get_postcode(postcode1)
-print(data1)
-data2 = api.get_postcode(postcode2)
-print(data2)
-"""
+print("\n\n",data1)
+#data2 = api.get_postcode(postcode2)
+#print(data2)
+
+#run only certain tests
+#python setup.py test -s tests.test.PostcodeIOTest.test_get_postcode
 
 """
 lat = 51.466324
