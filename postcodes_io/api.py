@@ -13,8 +13,18 @@ class Api(object):
         """
         Instantiate a new postcodes_io.Api object
 
-        :param debug_http (bool, optional) enable logging for http requests.
-        :param timeout (int, optional): set timeout for http/https requests
+        Parameters
+        ----------
+        debug_http : boolean
+            (optional) To enable logging for http requests
+        timeout : int
+            Set timeout for http/https requests
+
+        Examples
+        ----------
+        >>> import postcodes-io-simple
+        >>> api = postcodes-io-simple.Api(debug_http=True)
+        >>> data = api.get_postcode('SW112EF')
 
         """
         self._debug_http = debug_http
