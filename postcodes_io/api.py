@@ -13,18 +13,10 @@ class Api(object):
         """
         Instantiate a new postcodes_io.Api object
 
-        Parameters
-        ----------
-        debug_http : boolean
+        :parameter debug_http : boolean
             (optional) To enable logging for http requests
-        timeout : int
+        :parameter timeout : int
             Set timeout for http/https requests
-
-        Examples
-        ----------
-        >>> import postcodes-io-simple
-        >>> api = postcodes-io-simple.Api(debug_http=True)
-        >>> data = api.get_postcode('SW112EF')
 
         """
         self._debug_http = debug_http
@@ -46,8 +38,15 @@ class Api(object):
     def is_postcode_valid(self, postcode):
         """
         This method validates post_code
-        :param postcode: postcode to check i.e. 'SW112EF'
-        :return: True if postcode is valid False if postcode is invalid
+        ##Params
+        * **postcode** - postcode to check i.e. 'SW112EF'
+        
+        ##Returns
+         - True if postcode is valid False if postcode is invalid
+        ```
+          is_valid = api.is_postcode_valid('SW112EF')
+
+        ```
         """
         url = '/postcodes/{postcode}/validate'.format(postcode=postcode)
         response = self._make_request('GET', url)
