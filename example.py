@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-import postcode-io-api
+import postcodes_io_api
 
-api = postcode-io-api.Api(debug_http=True)
+api = postcodes_io_api.Api(debug_http=True)
 
 postcode1 = 'SW112EF'
 postcode2 = 'SW112222'

@@ -1,12 +1,12 @@
 import unittest
 
-import postcodes_io
+import postcodes_io_api
 import random
 
 
 class PostcodeIOTest(unittest.TestCase):
     def setUp(self):
-        self.api_client = postcodes_io.Api()
+        self.api_client = postcodes_io_api.Api()
         self.latitude = 51.466324
         self.longitude = -0.173606
         self.VALID_OUTCODES = ['KT19', 'HA9', 'SW19', 'IV2', 'PH16']
