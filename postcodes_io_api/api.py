@@ -92,7 +92,7 @@ class Api(object):
 
         ```
         """
-        url = '/postcodes/{postcode}/nearest'.format(postcode=kwargs.get('postcode'))
+        url = '/postcodes/{postcode}/nearest'.format(postcode=kwargs.pop('postcode', ''))
         response = self._make_request('GET', url, data=kwargs)
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
@@ -190,7 +190,7 @@ class Api(object):
             data = api.get_autocomplete_postcode(postcode='SW18',limit=2)
         ```
         """
-        url = '/postcodes/{postcode}/autocomplete'.format(postcode=kwargs.get('postcode'))
+        url = '/postcodes/{postcode}/autocomplete'.format(postcode=kwargs.pop('postcode', ''))
         response = self._make_request('GET', url, data=kwargs)
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
@@ -222,7 +222,7 @@ class Api(object):
             data = api.get_nearest_outcodes_for_outcode(outcode='KT1',limit=2)
         ```
         """
-        url = '/outcodes/{outcode}/nearest'.format(outcode=kwargs.get('outcode'))
+        url = '/outcodes/{outcode}/nearest'.format(outcode=kwargs.pop('outcode', ''))
         response = self._make_request('GET', url, data=kwargs)
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
