@@ -84,6 +84,7 @@ if __name__ == "__main__":
         maintainer_email=find_meta("email"),
         keywords=KEYWORDS,
         long_description=LONG,
+        long_description_content_type='text/markdown',
         packages=PACKAGES,
         zip_safe=False,
         classifiers=CLASSIFIERS,
