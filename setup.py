@@ -68,8 +68,7 @@ def find_meta(meta):
 VERSION = find_meta("version")
 URL = find_meta("url")
 LONG = (
-        read("README.md")
-        + "\n\n" + read("CHANGES.md") + "\n\n"
+        read("README.md") + "\n\n"
 )
 
 if __name__ == "__main__":
