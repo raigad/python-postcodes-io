@@ -22,6 +22,8 @@ CLASSIFIERS = [
     "Intended Audience :: Developers",
     "Natural Language :: English",
     "Programming Language :: Python",
+    "Programming Language :: Python :: 2",
+    "Programming Language :: Python :: 2.7",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.4",
     "Programming Language :: Python :: 3.5",
@@ -67,7 +69,7 @@ VERSION = find_meta("version")
 URL = find_meta("url")
 LONG = (
         read("README.md")
-        + "\n\n"
+        + "\n\n" + read("CHANGES.md") + "\n\n"
 )
 
 if __name__ == "__main__":
