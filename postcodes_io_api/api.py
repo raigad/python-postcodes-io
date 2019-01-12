@@ -1,9 +1,16 @@
 import requests
 import logging
 import json
-from urllib.parse import urlparse, urlunparse, urlencode, quote_plus
-from urllib.request import __version__ as urllib_version
-import http.client as http_client
+
+try:
+    # python 3
+    import http.client as http_client
+    from urllib.parse import urlparse, urlunparse, urlencode
+except ImportError:
+    # python 2
+    import httplib as http_client
+    from urlparse import urlparse, urlunparse
+    from urllib import urlencode
 
 API_BASE_URL = 'http://api.postcodes.io'
 
