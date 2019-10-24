@@ -83,6 +83,10 @@ class Api(object):
         """
         url = '/postcodes/{postcode}'.format(postcode=postcode)
         response = self._make_request('GET', url)
+        
+        if response.status_code == 200:
+            url = '/terminated_postcodes/{postcode}'.format(postcode=postcode)
+            response = self._make_request('GET', url)
         data = self._parse_json_data(response.content.decode('utf-8'))
         return data
 
