@@ -73,7 +73,7 @@ class Api(object):
 
     def get_postcode(self, postcode):
         """
-        This method returns data for post_code
+        This method returns data for post_code, and returns lat/long for a postcode that is terminated but valid
         * **:param postcode** - postcode to check i.e. 'SW112EF'
         * **::return** - postcode detailed data
         ```
@@ -84,7 +84,7 @@ class Api(object):
         url = '/postcodes/{postcode}'.format(postcode=postcode)
         response = self._make_request('GET', url)
         
-        if response.status_code == 200:
+        if response.status_code == 404:
             url = '/terminated_postcodes/{postcode}'.format(postcode=postcode)
             response = self._make_request('GET', url)
         data = self._parse_json_data(response.content.decode('utf-8'))
